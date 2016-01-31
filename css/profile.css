@@ -1,0 +1,54 @@
+html, body {
+    margin: 0px;
+    height: 100%;
+    padding: 0px;
+}
+
+
+body{
+	height: 100%;
+	width: 100%;
+	background-color: #00aef0;
+	font-family: Open Sans;
+	margin: 0;
+	
+}
+
+
+#header ul{
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+
+}
+
+#header-elements li{
+	float: left;
+}
+
+
+#header-elements a{
+	display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#content{
+	height: 50%;
+	width: 25%;
+	text-align: center;
+
+}
+
+#profile-info{
+	background-color: #D3D3D3;
+
+}
+
+#profile-info table{
+
+}

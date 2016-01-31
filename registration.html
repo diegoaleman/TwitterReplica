@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Registration</title>
+
+  	<link href="css/registration.css" type="text/css" rel="stylesheet"/>
+  	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600,300' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+	<div id="signUp">
+		<div id="title">
+			<h1>New to Twtr?</h1>
+		</div>
+		<div id="form-data">
+		
+			<form>
+				<input class="formInput" id="name" type="text" placeholder="Full Name" />
+				
+				<input class="formInput" id="email" type="text" placeholder="Email" />
+				
+				<input class="formInput" id="password" type="password" placeholder="Password"/><br/>	  
+
+				<input type="button" id="login" value="Sign up"/>   
+			</form>
+			
+		</div>
+	</div>
+
+
+
+
+
+	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+</body>
+
+<script type="text/javascript">
+$( document ).on('ready', function() {
+
+	
+
+	//click on SIGN UP 
+	$("#login").on("click", function(){
+		if ($("#name").val().length == 0){
+			alert("Missing NAME field");
+		}
+		else if($("#email").val().length == 0){
+			alert("Missing EMAIL field");
+		}
+		else if ($("#password").val().length == 0){
+			alert("Missing PASSWORD field");
+		}
+		else{
+			window.location = "index.html";
+		}
+	});
+
+
+
+
+});
+</script>
+</html>

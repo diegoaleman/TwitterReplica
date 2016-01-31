@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Homepage</title>
+
+  	<link href="css/index.css" type="text/css" rel="stylesheet"/>
+  	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600,300' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+	
+	<div id="header">
+		
+		<ul id="header-elements">
+			<li><a id ="homepage" href="index.html">Twitr.</a></li>
+			<li><a id ="profile" href="profile.html">Profile</a></li>
+			<li><a id ="logout" href="login.html">Logout</a></li>
+		</ul>
+
+	</div>
+
+	<div id="content">
+		<div id="new-tweet">
+			<h3>New Tweet</h3>
+			<form>
+				<textarea class="formInput" rows="4" cols="50" id="new-user-tweet"></textarea>
+				<input type="button" id="submit" value="Submit"/>   
+			</form>
+			
+		</div>
+		<div id="tweets">
+			<div class="tweet">
+				<h3>Username</h3>
+				<p>Message</p>
+			</div>
+		</div>
+	</div>
+
+
+	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+</body>
+
+<script type="text/javascript">
+$( document ).on('ready', function() {
+
+	// click en SUBMIT tweet nuevo
+	$("#submit").on("click", function(){
+		if ($("#new-user-tweet").val().length == 0){
+			alert("Please insert tweet content");
+		}
+		else{
+			var t = "<div class='tweet'>";
+			t += "<h3>Test</h3>";
+			t += "<p>" + $("#new-user-tweet").val() + "</p>";
+			t+="</div>";
+
+			$("#new-user-tweet").val("");
+
+			$("#tweets").prepend(t);
+		}
+	});
+
+
+	// click en boton PROFILE
+
+
+
+	// click en boton LOGOUT
+	$("#logout").on("click", function(){
+		
+		alert("See you soon!");
+		
+	});
+	
+});
+</script>
+</html>

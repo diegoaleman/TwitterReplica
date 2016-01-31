@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+
+  	<link href="css/login.css" type="text/css" rel="stylesheet"/>
+  	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600,300' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+	<div id="signIn">
+		<div id="title">
+			<h1>Twtr.</h1>
+		</div>
+		<div id="form-data">
+			
+			<form>
+				<input class="formInput" id="email" type="text" placeholder="Email" /> <br/>	
+				
+				<input class="formInput" id="password" type="password" placeholder="Password"/> <br/>	  
+
+				<input type="button" id="login" value="Login"/>   
+			</form>
+			
+		</div>
+	</div>
+
+
+
+
+
+	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+</body>
+
+<script type="text/javascript">
+$( document ).on('ready', function() {
+	
+	// click on LOGIN button
+	$("#login").on("click", function(){
+		if ($("#email").val().length == 0){	// falto llenar email
+			alert("Missing EMAIL field");
+		}
+		else if($("#password").val().length == 0) {	// falto llenar password
+			alert("Missing PASSWORD field");
+		}
+		else { // TODO BIEN
+			window.location = "index.html";
+		}
+	});
+	
+});
+</script>
+</html>

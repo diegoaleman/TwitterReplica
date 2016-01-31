@@ -1,0 +1,49 @@
+body{
+	height: 100%;
+	width: 100%;
+	background-color: #00aef0;
+	font-family: Open Sans;
+	
+}
+
+#signUp{
+	height: 50%;
+	margin-top: 15%;
+	width: 25%;
+	margin-left: 32.5%;
+	background-color: rgba(255,255, 255, 1);
+	border-radius: 25px;
+
+	padding: 3%;
+	text-align: center;
+
+
+}
+
+#title{
+	margin-top: -10px;
+	font-size: 20px;
+}
+
+#form-data{
+
+}
+
+#login{
+	background-color:  rgb(86, 188, 138);
+	border: none;
+	color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.formInput{
+	width: 100%;
+	height: 30px;
+	font-size: 15px;
+}
