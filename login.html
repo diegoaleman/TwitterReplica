@@ -37,17 +37,34 @@ $( document ).on('ready', function() {
 	
 	// click on LOGIN button
 	$("#login").on("click", function(){
+
+		// FORM FILLED CORRECTLY
 		if ($("#email").val().length == 0  ||  $("#password").val().length == 0){	// falto llenar email
 			alert("Please fill all fields!");
 		}
 		else {
+			var jsonObject = {
+                "email" : $("#email").val(),
+                "userPassword" : $("#password").val(),
+                "action" : "LOGIN"
+          	};
 
-			if ($("#email").val() == "laboratorio"  &&  $("#password").val() == "web"){
-				window.location = "index.html";
-			}
-			else {
-				alert("Error, please provide valid credentials!");
-			}
+            $.ajax({
+                type: "POST",
+                url: "data/applicationLayer.php",
+                dataType: "json",
+                data: jsonObject,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                success: function(jsonData) {
+                	alert("Welcome!");
+                    window.location.replace("index.html");
+                   
+                },
+                error: function(errorMsg){
+                    alert("Error, please provide valid credentials!");
+                }
+            });
+			
 		}
 	});
 	

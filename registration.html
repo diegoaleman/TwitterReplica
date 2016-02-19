@@ -15,7 +15,11 @@
 		<div id="form-data">
 		
 			<form>
-				<input class="formInput" id="name" type="text" placeholder="Full Name" />
+				<input class="formInput" id="fName" type="text" placeholder="First Name" />
+
+				<input class="formInput" id="lName" type="text" placeholder="Last Name" />
+
+				<input class="formInput" id="userName" type="text" placeholder="Username" />
 				
 				<input class="formInput" id="email" type="text" placeholder="Email" />
 				
@@ -41,17 +45,53 @@ $( document ).on('ready', function() {
 
 	//click on SIGN UP 
 	$("#login").on("click", function(){
-		if ($("#name").val().length == 0){
-			alert("Missing NAME field");
+		if ($("#fName").val().length == 0){
+			alert("Missing Fist Name field");
 		}
-		else if($("#email").val().length == 0){
-			alert("Missing EMAIL field");
+		else if($("#lName").val().length == 0){
+			alert("Missing Last Name field");
+		}
+		else if ($("#userName").val().length == 0){
+			alert("Missing User Name field");
+		}
+		else if ($("#email").val().length == 0){
+			alert("Missing Email field");
 		}
 		else if ($("#password").val().length == 0){
-			alert("Missing PASSWORD field");
+			alert("Missing Password field");
 		}
 		else{
-			window.location = "index.html";
+			var jsonObject = {
+				"firstName": $("#fName").val(),
+                "lastName": $("#lName").val(),
+                "userName": $("#userName").val(),
+                "email": $("#email").val(),
+                "userPassword": $("#password").val(),
+                "action" : "REGISTRATION"
+           	};
+
+
+	        $.ajax({
+	            type: 'POST',
+	            url: "data/applicationLayer.php",
+	            data: jsonObject,
+	            dataType:'json',
+	            headers:{'Content-Type': 'application/x-www-form-urlencoded'},
+	            success: function(jsonData){
+		            alert("Welcome");
+		            window.location = "index.html";
+
+	            },
+	           	error: function(errorMessage){
+	           		alert("Error");
+	           	}
+	      	});
+
+
+
+
+
+			
 		}
 	});
 
