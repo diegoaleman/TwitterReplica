@@ -38,91 +38,76 @@ body{
 }
 
 #content{
-	
-	width: 100%;
-	
 
 }
 
-#profile-info-box{
-	background-color: #fff;
+#friends-list{
 
 	width: 50%;
+		background-color: #fff;
 
 	
 	margin-left: 25%;
 	
 	border-radius: 5px;
 	margin-top: 50px;
+	padding-bottom: 30px;
 
-	height: 625px;
 }
 
-#profile-info-box h1{
+#friends-list h1{
 	padding-top: 30px;
 	text-align: center;
-}
-
-#profile-info{
-	padding-bottom: 50px;
-	width: 70%;
-	margin-left: 15%;
-}
-
-.info{
-	margin: 30px 0px;
 
 }
 
-.info-description{
-	float: left;
+.friend{
+	background-color: #F7F7F7;
+	width: 50%;
+	margin-left: 25%;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	border-style: solid;
+	border-width: 1px;
+	padding: 10px;
+}
+
+
+
+.friend-name{
+	margin: 10px 0px;
 	font-size: 20px;
 	font-weight: 500;
-
 }
 
-.info-data{
-	float: right;
-	width: 300px;
-	
-	font-size: 20px;
+.friend-username{
+	margin: 10px 0px;
 	font-weight: 200;
+}
+
+.friend-description{
+	margin: 10px 0px;
+	font-weight: 200;
+	font-style: italic;
 
 }
 
-textarea.info-data{
-	resize: none;
-
-
-}
-
-#save-new-data{
-	text-align: center;
-	margin-top: 30px;
-	width: 20%;
-	height: 30px;
-	margin-left: 40%;
-
-	background-color:  rgb(86, 188, 138);
+.friend-options button{
+	font-size: 15px;
+	background-color:  #ED4337;
 	border: none;
 	color: white;
-	/*
-    padding: 15px 32px;
-    margin: 0px 15%;
-    */
+    /*padding: 15px 32px;
+    margin: 0px 15%;*/
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+	width: 30%;
+	margin-left: 35%;
 	border-radius: 5px;
 
 }
-
-
-
-
-
-
-
 
 

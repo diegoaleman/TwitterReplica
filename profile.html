@@ -12,6 +12,7 @@
 		
 		<ul id="header-elements">
 			<li><a id ="homepage" href="index.html">Twitr.</a></li>
+			<li><a id ="friends" href="friends.html">Friends</a></li>
 			<li><a id ="profile" href="profile.html">Profile</a></li>
 			<li><a id ="logout" href="login.html">Logout</a></li>
 		</ul>
@@ -21,10 +22,52 @@
 
 	<div id="content">
 
-		<div id="profile-info">
+		<div id="profile-info-box">
 
 			<h1>Profile/Settings</h1>
 
+			<form id="profile-info">
+				<div class="info">
+					<span class="info-description">First Name:</span>
+					<input class="info-data" type="text" placeholder="Diego" /> <br/>
+				</div>
+
+				<div class="info">
+					<span class="info-description">Last Name:</span>
+					<input class="info-data" type="text" placeholder="Aleman" /> <br/>	
+				</div>
+
+				<div class="info">
+					<span class="info-description">Email:</span>
+					<input class="info-data" type="text" placeholder="diegoalemtz@gmail.com" /> <br/>	
+				</div>
+
+				<div class="info">
+					<span class="info-description">Username:</span>
+					<input class="info-data" type="text" placeholder="@diego" /> <br/>
+				</div>
+
+				<div class="info">
+					<span class="info-description">Password:</span>
+					<input class="info-data" type="text" placeholder="123456" /> <br/>	
+				</div>	
+
+				<div class="info">
+					<span class="info-description">Age:</span>
+					<input class="info-data" type="text" placeholder="21" /> <br/>
+				</div>
+
+				<div class="info">
+					<span class="info-description">Description:</span>
+					<textarea class="info-data" rows="6" cols="50"></textarea><br/>
+				</div>
+	  
+
+				<input type="button" id="save-new-data" value="Save"/>   
+			</form>
+
+			
+			<!--
 			<table>
 				<tr>
 					<td>Name</td>
@@ -37,10 +80,29 @@
 				</tr>
 
 				<tr>
+					<td>Username</td>
+					<td>@diego</td>
+				</tr>
+
+				<tr>
 					<td>Age</td>
 					<td>21</td>
 				</tr>
+
+				<tr>
+					<td>Age</td>
+					<td><input type="text" placeholder="221"></input></td>
+				</tr>
+
+				<tr>
+					<td>Age</td>
+					<textarea ></textarea>
+				</tr>
+				
+
+
 			</table>
+		-->
 
 		</div>
 

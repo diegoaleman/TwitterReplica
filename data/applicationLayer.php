@@ -69,15 +69,33 @@
 
 	function saveTweetAction(){
 
+		$email = $_POST['email'];
+		$content = $_POST['content'];
+
+
+		$result = saveTweet($email, $content);
+
+		if ($result['message'] == 'OK'){
+		    
+	    	$response = array('message' => 'OK');  
+
+		    echo json_encode($response);
+		}
+
+		else{
+			die(json_encode($result));
+		}
+
 	}
 
 
 
 
 
-
+	// Gets all tweets from all users
 	function getTweetsAction(){
-
+		$result = getAllTweets();
+		echo json_encode($result);
 	}
 
 

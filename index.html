@@ -13,6 +13,7 @@
 		
 		<ul id="header-elements">
 			<li><a id ="homepage" href="index.html">Twitr.</a></li>
+			<li><a id ="friends" href="friends.html">Friends</a></li>
 			<li><a id ="profile" href="profile.html">Profile</a></li>
 			<li><a id ="logout" href="login.html">Logout</a></li>
 		</ul>
@@ -29,7 +30,23 @@
 			
 		</div>
 		<div id="tweets">
-			
+			<div class='tweet'>
+				<div class = 'tweet-content'>
+					<span class="tweet-userfullname">Diego Aleman</span>
+					<span class="tweet-username">@diego</span>
+					<p class="tweet-text">Este es el mejor tweet de todos los tiempos de toda la vida entera</p>
+
+					<div class='like-box'>
+						<button class='like-button'>Like</button>
+						<span class='like-number'>200</span>
+					</div>
+				</div>
+
+			</div>
+
+
+
+
 		</div>
 	</div>
 
@@ -40,21 +57,85 @@
 <script type="text/javascript">
 $( document ).on('ready', function() {
 
+	
+
+	$.ajax({
+		type: 'POST',
+		url: 'data/applicationLayer.php',
+      	dataType: 'json',
+      	data: {'action':'GET_TWEETS'},
+      	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      	success: function(jsonData) {
+
+      		var tweet = "";
+      		for (var i=0; i<jsonData.length; i++){
+      			tweet += "<div class='tweet'><div class = 'tweet-content'>";
+      			tweet += "<span class='tweet-userfullname'>" + jsonData[i].fName + " " + jsonData[i].lName  + "</span>";
+      			tweet += "<span class='tweet-username'>@" + jsonData[i].username + "</span>";
+      			tweet += "<p class='tweet-text'>" + jsonData[i].content + "</p>";
+      			tweet += "<div class='like-box'><button class='like-button'>Like</button>";
+      			tweet += "<span class='like-number'>" + jsonData[i].likes + "</span>";
+      			tweet += "</div></div></div>";
+
+      		}
+
+      		$("#tweets").prepend(tweet);
+
+
+
+      		console.log(jsonData);
+
+      	},
+      	error: function(errorMsg){
+        	alert(errorMsg.statusText);
+      }
+
+	});
+
+
+
+
+
+
 	// click en SUBMIT tweet nuevo
 	$("#submit").on("click", function(){
 		if ($("#new-user-tweet").val().length == 0){
 			alert("Please insert tweet content");
 		}
 		else{
+			var jsonObject = {
+                "email" : "diego@me.com",
+                "content" : $("#new-user-tweet").val(),
+                "action" : "SAVE_TWEET"
+          	};
+
+			$.ajax({
+				type: 'POST',
+				url: 'data/applicationLayer.php',
+		      	dataType: 'json',
+		      	data: jsonObject,
+		      	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+		      	success: function(jsonData) {
+		      		console.log("success");
+		      	},
+		      	error: function(errorMsg){
+		        	alert(errorMsg.statusText);
+		        }
+		   	});
+		}
+			/*
 			var t = "<div class='tweet'>";
 			t += "<h3>Diego Aleman</h3>";
 			t += "<p>" + $("#new-user-tweet").val() + "</p>";
+			t += "<div class='like-box'><button class='like-button'>Like</button>";
+			t += "<span class='like-number'>200</span></div>";
 			t+="</div>";
 
 			$("#new-user-tweet").val("");
 
 			$("#tweets").prepend(t);
-		}
+			*/
+
 	});
 
 

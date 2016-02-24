@@ -35,6 +35,8 @@
 						break;
 			case 410: 	$header .= "410 Username already in use please select another one";
 						break;
+			case 411: 	$header .= "411 User does not exist";
+						break;
 			default:	$header .= "404 Request Not Found";
 
 		}
@@ -115,5 +117,74 @@
         }
     }
 
+
+
+
+    function getAllTweets(){
+    	$conn = connect();
+
+    	if ($conn != null){
+    		$sql = "SELECT * FROM Tweet";
+
+    		$sql = "SELECT * FROM Tweet, Users WHERE Tweet.email = Users.email";
+			$result = $conn->query($sql);
+
+			
+			$response = array();
+			if ($result->num_rows > 0) {
+				while($row = $result->fetch_assoc()) {
+					array_push($response, array('tweetId' => $row['tweetId'], 'content' => $row['content'], 'likes' => $row['likes'],'email' => $row['email'], 'username' => $row['username'], 'fName' => $row['fName'] ,'lName' => $row['lName']));
+				}
+
+				return $response;
+			}
+			else {
+				$conn->close();
+				return $response; // no existen items
+			}
+    	}
+    	else {
+    		$conn->close();
+        	return errors(500);
+    	}
+
+
+    }
+
+
+    function saveTweet($email, $content){
+    	$conn = connect();
+
+        if ($conn != null){
+
+        	// Error si existe usuario con mismo email
+        	$sql = "SELECT email FROM Users WHERE email = '$email'";
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0){
+									// Error si existe usuario con mismo username
+				
+				$sql = "INSERT INTO Tweet (content, likes, email)
+				VALUES ('$content', 0, '$email')";
+
+				if (mysqli_query($conn, $sql)){
+					$response = array('message' => 'OK'); 
+				}
+				else {
+					return errors(500);
+				}
+			
+			}
+			else{
+				$conn->close();
+				return errors(411);
+
+			}
+        }
+        else{
+        	$conn->close();
+        	return errors(500);
+        }
+    }
     
 ?>
