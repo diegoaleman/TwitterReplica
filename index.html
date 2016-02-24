@@ -68,7 +68,7 @@ $( document ).on('ready', function() {
       	success: function(jsonData) {
 
       		var tweet = "";
-      		for (var i=0; i<jsonData.length; i++){
+      		for (var i=jsonData.length -1; i>=0; i--){
       			tweet += "<div class='tweet'><div class = 'tweet-content'>";
       			tweet += "<span class='tweet-userfullname'>" + jsonData[i].fName + " " + jsonData[i].lName  + "</span>";
       			tweet += "<span class='tweet-username'>@" + jsonData[i].username + "</span>";

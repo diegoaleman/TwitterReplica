@@ -126,7 +126,7 @@
     	if ($conn != null){
     		$sql = "SELECT * FROM Tweet";
 
-    		$sql = "SELECT * FROM Tweet, Users WHERE Tweet.email = Users.email";
+    		$sql = "SELECT * FROM Tweet, Users WHERE Tweet.email = Users.email ORDER BY Tweet.tweetDate";
 			$result = $conn->query($sql);
 
 			
