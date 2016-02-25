@@ -104,7 +104,6 @@ $( document ).on('ready', function() {
 		}
 		else{
 			var jsonObject = {
-                "email" : "diego@me.com",
                 "content" : $("#new-user-tweet").val(),
                 "action" : "SAVE_TWEET"
           	};
@@ -117,6 +116,7 @@ $( document ).on('ready', function() {
 		      	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 		      	success: function(jsonData) {
 		      		console.log("success");
+		      		location.reload();
 		      	},
 		      	error: function(errorMsg){
 		        	alert(errorMsg.statusText);
@@ -131,7 +131,7 @@ $( document ).on('ready', function() {
 			t += "<span class='like-number'>200</span></div>";
 			t+="</div>";
 
-			$("#new-user-tweet").val("");
+			
 
 			$("#tweets").prepend(t);
 			*/
@@ -144,10 +144,23 @@ $( document ).on('ready', function() {
 
 
 	// click en boton LOGOUT
-	$("#logout").on("click", function(){
+	$("#logout").on("click",function(){
+		$.ajax({
+			type: 'POST',
+			url: 'data/applicationLayer.php',
+	      	dataType: 'json',
+	      	data: {'action':'END_SESSION'},
+	      	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+	      	success: function(jsonData) {
+	      		window.location.replace("login.html");
+
+	      	},
+	      	error: function(errorMsg){
+	        	alert(errorMsg.statusText);
+	      	}
+
 		
-		alert("See you soon!");
-		
+		});
 	});
 	
 });

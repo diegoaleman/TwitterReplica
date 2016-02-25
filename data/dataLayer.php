@@ -57,7 +57,7 @@
 
 			if ($result->num_rows > 0){
 				while($row = $result->fetch_assoc()) {
-		    		$response = array('message' => 'OK');   
+		    		$response = array('message' => 'OK', 'fName' => $row['fName'], 'lName' => $row['lName'], 'username' => $row['username'], 'email' => $row['email']);   
 		    	}
 
 		    	$conn->close();
@@ -124,8 +124,6 @@
     	$conn = connect();
 
     	if ($conn != null){
-    		$sql = "SELECT * FROM Tweet";
-
     		$sql = "SELECT * FROM Tweet, Users WHERE Tweet.email = Users.email ORDER BY Tweet.tweetDate";
 			$result = $conn->query($sql);
 
@@ -186,5 +184,73 @@
         	return errors(500);
         }
     }
+
+
+
+   	function getProfileInfo($email){
+   		$conn = connect();
+
+    	if ($conn != null){
+    		$sql = "SELECT * FROM Users WHERE email = '$email'";
+			$result = $conn->query($sql);
+
+			
+			$response = array();
+			if ($result->num_rows > 0) {
+				while($row = $result->fetch_assoc()) {
+					array_push($response, array('fName' => $row['fName'], 'lName' => $row['lName'], 'username' => $row['username'],'email' => $row['email'], 'passwrd' => $row['passwrd'], 'age' => $row['age'] ,'description' => $row['description']));
+				}
+
+				return $response;
+			}
+			else {
+				$conn->close();
+				return $response; // no existen items
+			}
+    	}
+    	else {
+    		$conn->close();
+        	return errors(500);
+    	}
+
+
+    }
+
+
+
+    function startSession($fName, $lName, $email, $username){
+		// Starting the session
+	    session_start();
+	    if (! isset($_SESSION['fName'])){
+	    	$_SESSION['fName'] = $fName;
+	    }
+
+	    if (! isset($_SESSION['lName'])){
+	    	$_SESSION['lName'] = $lName;
+	    }
+
+	    if (! isset($_SESSION['email'])){
+	    	$_SESSION['email'] = $email;
+	    }
+
+	   	if (! isset($_SESSION['username'])){
+	    	$_SESSION['username'] = $username;
+	    }
+    }
+
+    function getSession(){
+    	session_start();
+    	if (isset($_SESSION['fName']) && isset($_SESSION['lName']) && isset($_SESSION['email']) && isset($_SESSION['username'])) {
+    		$response = array('message' => 'OK' ,'fName' => $_SESSION['fName'], 'lName' => $_SESSION['lName'], 'email' => $_SESSION['email'], 'username' => $_SESSION['username']);
+    		return $response;
+    	} else {
+    		$response = array('name' => 'user');
+    		return $response;
+    	}
+    }
+
+
+
+
     
 ?>

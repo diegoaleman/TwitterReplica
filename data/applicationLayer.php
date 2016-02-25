@@ -16,7 +16,9 @@
 		case 'GET_PROFILE': 	getProfileAction();
 								break;
 		case 'ADD_FRIEND': 		addFriendAction();
-								break;																							
+								break;		
+		case 'END_SESSION': 	endSession();
+								break;																						
 	}
 
 
@@ -31,6 +33,7 @@
 		if ($result['message'] == 'OK'){
 		    
 	    	$response = array('message' => 'OK');  
+	    	startSession($result['fName'], $result['lName'], $result['email'], $result['username']);
 
 		    echo json_encode($response);
 		}
@@ -68,12 +71,11 @@
 
 
 	function saveTweetAction(){
-
-		$email = $_POST['email'];
+		session_start();
 		$content = $_POST['content'];
 
 
-		$result = saveTweet($email, $content);
+		$result = saveTweet($_SESSION['email'], $content);
 
 		if ($result['message'] == 'OK'){
 		    
@@ -103,6 +105,12 @@
 
 
 	function getProfileAction(){
+		session_start();
+
+		$result = getProfileInfo($_SESSION['email']);
+
+		
+		    echo json_encode($result);
 
 	}
 
@@ -111,6 +119,25 @@
 
 
 	function addFriendAction(){
+
+	}
+
+
+	function endSession(){
+		session_start();
+		if (isset($_SESSION['fName']) && isset($_SESSION['lName']) && isset($_SESSION['email']) && isset($_SESSION['username'])){
+			unset($_SESSION['fName']);
+			unset($_SESSION['lName']);
+			unset($_SESSION['email']);
+			unset($_SESSION['username']);
+			session_destroy();
+			
+			echo json_encode(array('success' => 'Session deleted'));   	    
+		}
+		else
+		{
+			die(json_encode(errors(417)));
+		}
 
 	}
 

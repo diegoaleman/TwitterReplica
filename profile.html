@@ -14,7 +14,7 @@
 			<li><a id ="homepage" href="index.html">Twitr.</a></li>
 			<li><a id ="friends" href="friends.html">Friends</a></li>
 			<li><a id ="profile" href="profile.html">Profile</a></li>
-			<li><a id ="logout" href="login.html">Logout</a></li>
+			<li><a id ="logout" href="">Logout</a></li>
 		</ul>
 
 	</div>
@@ -29,80 +29,42 @@
 			<form id="profile-info">
 				<div class="info">
 					<span class="info-description">First Name:</span>
-					<input class="info-data" type="text" placeholder="Diego" /> <br/>
+					<input class="info-data" id="fName" type="text"  /> <br/>
 				</div>
 
 				<div class="info">
 					<span class="info-description">Last Name:</span>
-					<input class="info-data" type="text" placeholder="Aleman" /> <br/>	
+					<input class="info-data" id="lName" type="text" /> <br/>	
 				</div>
 
 				<div class="info">
 					<span class="info-description">Email:</span>
-					<input class="info-data" type="text" placeholder="diegoalemtz@gmail.com" /> <br/>	
+					<input class="info-data" id="email" type="text" /> <br/>	
 				</div>
 
 				<div class="info">
 					<span class="info-description">Username:</span>
-					<input class="info-data" type="text" placeholder="@diego" /> <br/>
+					<input class="info-data" id="username" type="text"/> <br/>
 				</div>
 
 				<div class="info">
 					<span class="info-description">Password:</span>
-					<input class="info-data" type="text" placeholder="123456" /> <br/>	
+					<input class="info-data" id="password" type="text"/> <br/>	
 				</div>	
 
 				<div class="info">
 					<span class="info-description">Age:</span>
-					<input class="info-data" type="text" placeholder="21" /> <br/>
+					<input class="info-data" id="age" type="text"/> <br/>
 				</div>
 
 				<div class="info">
 					<span class="info-description">Description:</span>
-					<textarea class="info-data" rows="6" cols="50"></textarea><br/>
+					<textarea class="info-data" id="description" rows="6" cols="50"></textarea><br/>
 				</div>
 	  
 
 				<input type="button" id="save-new-data" value="Save"/>   
 			</form>
-
-			
-			<!--
-			<table>
-				<tr>
-					<td>Name</td>
-					<td>Diego Aleman</td>
-				</tr>
-
-				<tr>
-					<td>Email</td>
-					<td>diegoalemtz@gmail.com</td>
-				</tr>
-
-				<tr>
-					<td>Username</td>
-					<td>@diego</td>
-				</tr>
-
-				<tr>
-					<td>Age</td>
-					<td>21</td>
-				</tr>
-
-				<tr>
-					<td>Age</td>
-					<td><input type="text" placeholder="221"></input></td>
-				</tr>
-
-				<tr>
-					<td>Age</td>
-					<textarea ></textarea>
-				</tr>
-				
-
-
-			</table>
-		-->
 
 		</div>
 
@@ -115,6 +77,54 @@
 
 <script type="text/javascript">
 $( document ).on('ready', function() {
+
+	$.ajax({
+		type: 'POST',
+		url: 'data/applicationLayer.php',
+      	dataType: 'json',
+      	data: {'action':'GET_PROFILE'},
+      	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      	success: function(jsonData) {
+
+ 			$('#fName').attr("placeholder",jsonData[0].fName);
+ 			$('#lName').attr("placeholder",jsonData[0].lName);
+ 			$('#email').attr("placeholder",jsonData[0].email);
+ 			$('#username').attr("placeholder",jsonData[0].username);
+ 			$('#password').attr("placeholder",jsonData[0].passwrd);
+ 			$('#age').attr("placeholder",jsonData[0].age);
+ 			$('#description').attr("placeholder",jsonData[0].description);
+
+
+
+      		console.log(jsonData);
+
+      	},
+      	error: function(errorMsg){
+        	alert(errorMsg.statusText);
+      }
+
+	});
+
+	$("#logout").on("click",function(){
+		$.ajax({
+			type: 'POST',
+			url: 'data/applicationLayer.php',
+	      	dataType: 'json',
+	      	data: {'action':'END_SESSION'},
+	      	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+	      	success: function(jsonData) {
+	      		window.location.replace("login.html");
+
+	      	},
+	      	error: function(errorMsg){
+	        	alert(errorMsg.statusText);
+	      	}
+
+		
+		});
+	});
+
+	
 
 	
 });
