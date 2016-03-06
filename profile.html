@@ -39,7 +39,7 @@
 
 				<div class="info">
 					<span class="info-description">Email:</span>
-					<input class="info-data" id="email" type="text" /> <br/>	
+					<input class="info-data" id="email" type="text" readonly/> <br/>	
 				</div>
 
 				<div class="info">
@@ -78,6 +78,26 @@
 <script type="text/javascript">
 $( document ).on('ready', function() {
 
+	/*
+	*	VERIFY INIT SESSION
+	*/
+	$.ajax({
+	    type: "POST",
+	    url: "data/applicationLayer.php",
+	    dataType: "json",
+	    data: {'action':'CHECK_SESSION'},
+	    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+	    success: function(jsonData) {
+	    	if (jsonData.message == 'ERROR'){
+	    		alert("Sesion no iniciada");
+	    		window.location.replace("login.html"); 
+	    	}
+	    },
+	    error: function(errorMsg){
+	        alert(errorMsg.statusText);
+	    }
+	});
+
 	$.ajax({
 		type: 'POST',
 		url: 'data/applicationLayer.php',
@@ -105,6 +125,8 @@ $( document ).on('ready', function() {
 
 	});
 
+
+
 	$("#logout").on("click",function(){
 		$.ajax({
 			type: 'POST',
@@ -122,6 +144,39 @@ $( document ).on('ready', function() {
 
 		
 		});
+	});
+
+
+
+	$("#save-new-data").on("click",function(){
+
+		var jsonObject = {
+            "fName" : $("#fName").val(),
+            "lName" : $("#lName").val(),
+            "username" : $("#username").val(),
+			"passwrd" : $("#password").val(),
+			"age" : $("#age").val(),
+			"description" : $("#description").val(),
+			"action" : "UPDATE_PROFILE"
+       	};
+
+        $.ajax({
+            type: "POST",
+            url: "data/applicationLayer.php",
+            dataType: "json",
+            data: jsonObject,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            success: function(jsonData) {
+            	alert("Your profile information was updated succesfully");  
+            	location.reload();  
+            },
+            error: function(errorMsg){
+                alert("There was an error updating your information!");
+                console.log(errorMsg);
+            }
+        });
+
+
 	});
 
 	

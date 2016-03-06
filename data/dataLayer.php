@@ -52,14 +52,13 @@
         $conn = connect();
 
         if ($conn != null){
-        	$sql = "SELECT fName, lName, username, email, passwrd FROM Users WHERE email = '$email' AND passwrd = $pass";
+        	$sql = "SELECT * FROM Users WHERE email = '$email' AND passwrd = $pass";
 			$result = $conn->query($sql);
 
 			if ($result->num_rows > 0){
 				while($row = $result->fetch_assoc()) {
 		    		$response = array('message' => 'OK', 'fName' => $row['fName'], 'lName' => $row['lName'], 'username' => $row['username'], 'email' => $row['email']);   
 		    	}
-
 		    	$conn->close();
 		    	return $response;
 			}
@@ -244,11 +243,131 @@
     		$response = array('message' => 'OK' ,'fName' => $_SESSION['fName'], 'lName' => $_SESSION['lName'], 'email' => $_SESSION['email'], 'username' => $_SESSION['username']);
     		return $response;
     	} else {
-    		$response = array('name' => 'user');
-    		return $response;
+			return array('message' => 'ERROR', 'code' => "Error: no hay sesion");
     	}
     }
 
+
+
+    function updateProfileInfo($email, $fName, $lName, $username, $pass, $age, $description){
+
+    	$conn = connect();
+
+        if ($conn != null){
+
+        	if ($fName != null){
+			$sql = "UPDATE Users SET fName='$fName' WHERE email='$email'";
+
+				if (mysqli_query($conn, $sql)){
+					$response = array('message' => 'OK'); 
+				}
+				else {
+					return errors(500);
+				}
+			}
+
+			if ($lName != null){
+				$sql = "UPDATE Users SET lName='$lName' WHERE email='$email'";
+
+				if (mysqli_query($conn, $sql)){
+					$response = array('message' => 'OK'); 
+				}
+				else {
+					return errors(500);
+				}
+			}
+			
+			if ($username != null){
+				$sql = "UPDATE Users SET username='$username' WHERE email='$email'";
+
+				if (mysqli_query($conn, $sql)){
+					$response = array('message' => 'OK'); 
+				}
+				else {
+					return errors(500);
+				}
+			}
+
+			if ($pass != null){
+				$sql = "UPDATE Users SET passwrd='$pass' WHERE email='$email'";
+
+				if (mysqli_query($conn, $sql)){
+					$response = array('message' => 'OK'); 
+				}
+				else {
+					return errors(500);
+				}
+			}
+			if ($age != null){
+				$sql = "UPDATE Users SET age='$age' WHERE email='$email'";
+
+				if (mysqli_query($conn, $sql)){
+					$response = array('message' => 'OK'); 
+				}
+				else {
+					return errors(500);
+				}
+			}
+
+			if ($description != null){
+				$sql = "UPDATE Users SET description='$description' WHERE email='$email'";
+
+				if (mysqli_query($conn, $sql)){
+					$response = array('message' => 'OK'); 
+				}
+				else {
+					return errors(500);
+				}
+			}
+
+        }
+        else{
+        	$conn->close();
+        	return errors(500);
+        }
+
+    }
+
+    function getFriends($email){
+    	$conn = connect();
+
+    	if ($conn != null){
+    		$sql = "SELECT * FROM Friends WHERE aEmail = '$email'";
+			$result = $conn->query($sql);
+
+			$response = array();
+			if ($result->num_rows > 0) {
+				while($row = $result->fetch_assoc()) {
+					$user = $row['bEmail'];
+					$sql = "SELECT * FROM Users WHERE email = '$user'";
+
+					$result = $conn->query($sql);
+
+					if ($result->num_rows > 0) {
+						while($row = $result->fetch_assoc()) {
+							array_push($response, array('fName' => $row['fName'], 'lName' => $row['lName'], 'username' => $row['username'],'description' => $row['description']));					
+						}
+					}
+					else {
+						$conn->close();
+						return $response; // no existen items
+					}
+				}
+
+				return $response;
+			}
+			else {
+				$conn->close();
+				return $response; // no existen items
+			}
+    	}
+    	else {
+    		$conn->close();
+        	return errors(500);
+    	}
+
+
+    }
 
 
 

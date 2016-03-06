@@ -23,7 +23,63 @@
 	<div id="content">
 		<div id="friends-list">
 			<h1>List of friends</h1>
-			<div class="friend">
+			
+		</div>
+	</div>
+
+
+	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+</body>
+
+<script type="text/javascript">
+$( document ).on('ready', function() {
+
+	/*
+	*	VERIFY INIT SESSION
+	*/
+	$.ajax({
+	    type: "POST",
+	    url: "data/applicationLayer.php",
+	    dataType: "json",
+	    data: {'action':'CHECK_SESSION'},
+	    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+	    success: function(jsonData) {
+	    	if (jsonData.message == 'ERROR'){
+	    		alert("Sesion no iniciada");
+	    		window.location.replace("login.html"); 
+	    	}
+	    },
+	    error: function(errorMsg){
+	        alert(errorMsg.statusText);
+	    }
+	});
+
+
+	$.ajax({
+		type: 'POST',
+		url: 'data/applicationLayer.php',
+      	dataType: 'json',
+      	data: {'action':'GET_FRIENDS'},
+      	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      	success: function(jsonData) {
+
+      		var x = "";
+
+      		for (var i=0; i<jsonData.length; i++){
+      			x += "<div class='friend'>";
+      			x += "<div class='friend-name'>" + jsonData[i].fName + " " + jsonData[i].lName + "</div>";
+      			x += "<div class='friend-username'>@" + jsonData[i].username + "</div>";
+      			x += "<div class='friend-description'>" + jsonData[i].description +"</div>";
+      			x += "<div class='friend-options'><button>Unfollow</button></div>";
+      			x += "</div>";
+
+      		}
+
+      		$("#friends-list").append(x);
+
+
+/*
+      		<div class="friend">
 				<div class="friend-name">Diego Aleman</div>
 				<div class="friend-username">@diego</div>
 				<div class="friend-description">Soy gracioso y cool</div>
@@ -34,16 +90,31 @@
 			</div>
 
 
-		</div>
+      		var tweet = "";
+      		for (var i=jsonData.length -1; i>=0; i--){
+      			tweet += "<div class='tweet'><div class = 'tweet-content'>";
+      			tweet += "<span class='tweet-userfullname'>" + jsonData[i].fName + " " + jsonData[i].lName  + "</span>";
+      			tweet += "<span class='tweet-username'>@" + jsonData[i].username + "</span>";
+      			tweet += "<p class='tweet-text'>" + jsonData[i].content + "</p>";
+      			tweet += "<div class='like-box'><button class='like-button'>Like</button>";
+      			tweet += "<span class='like-number'>" + jsonData[i].likes + "</span>";
+      			tweet += "</div></div></div>";
 
-	</div>
+      		}
+
+      		$("#tweets").prepend(tweet);
+      		*/
 
 
-	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-</body>
 
-<script type="text/javascript">
-$( document ).on('ready', function() {
+      		console.log(jsonData);
+
+      	},
+      	error: function(errorMsg){
+        	alert(errorMsg.statusText);
+      }
+
+	});
 
 
 

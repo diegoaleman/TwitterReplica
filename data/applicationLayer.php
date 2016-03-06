@@ -15,10 +15,17 @@
 								break;
 		case 'GET_PROFILE': 	getProfileAction();
 								break;
-		case 'ADD_FRIEND': 		addFriendAction();
+		case 'UPDATE_PROFILE': 	updateProfileAction();
+								break;					
+		case 'GET_FRIENDS': 	getFriendsAction();
 								break;		
 		case 'END_SESSION': 	endSession();
-								break;																						
+								break;		
+		case 'CHECK_SESSION': 	checkSession();
+								break;	
+
+
+																												
 	}
 
 
@@ -31,13 +38,10 @@
 		$result = login($email, $pass);
 
 		if ($result['message'] == 'OK'){
-		    
-	    	$response = array('message' => 'OK');  
 	    	startSession($result['fName'], $result['lName'], $result['email'], $result['username']);
 
-		    echo json_encode($response);
+		    echo json_encode($result);
 		}
-
 		else{
 			die(json_encode($result));
 		}
@@ -56,12 +60,10 @@
 		$result = registration($fName, $lName, $userName, $email, $pass);
 
 		if ($result['message'] == 'OK'){
-		    
-	    	$response = array('message' => 'OK');  
+	    	startSession($fName, $lName, $email, $userName);
 
-		    echo json_encode($response);
+		    echo json_encode($result);
 		}
-
 		else{
 			die(json_encode($result));
 		}
@@ -72,18 +74,16 @@
 
 	function saveTweetAction(){
 		session_start();
-		$content = $_POST['content'];
 
+		$content = $_POST['content'];
 
 		$result = saveTweet($_SESSION['email'], $content);
 
 		if ($result['message'] == 'OK'){
-		    
 	    	$response = array('message' => 'OK');  
 
 		    echo json_encode($response);
 		}
-
 		else{
 			die(json_encode($result));
 		}
@@ -108,19 +108,39 @@
 		session_start();
 
 		$result = getProfileInfo($_SESSION['email']);
+		echo json_encode($result);
+	}
 
+
+
+	function updateProfileAction(){
+
+		session_start();
+
+		$fName = $_POST['fName'];
+		$lName = $_POST['lName'];
+		$username = $_POST['username'];
+		$email = $_SESSION['email'];
+		$pass = $_POST['passwrd'];
+		$age = $_POST['age'];
+		$description = $_POST['description'];
+
+
+		$result = updateProfileInfo($email, $fName, $lName, $username, $pass, $age, $description);
+
+		echo json_encode($result);
+	}
+
+
+	function getFriendsAction(){
+		session_start();
 		
-		    echo json_encode($result);
+		$result = getFriends($_SESSION['email']);
+		echo json_encode($result);
 
 	}
 
 
-
-
-
-	function addFriendAction(){
-
-	}
 
 
 	function endSession(){
@@ -139,6 +159,17 @@
 			die(json_encode(errors(417)));
 		}
 
+	}
+
+
+
+	function checkSession(){
+		$result = getSession();
+		if ($result['message'] == 'OK') {
+			echo json_encode($result);
+		} else {
+			die (json_encode($result));
+		}
 	}
 
 	
